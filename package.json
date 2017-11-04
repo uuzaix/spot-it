@@ -1,0 +1,21 @@
+{
+  "name": "spot-it",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "vue": "^2.5.3"
+  },
+  "devDependencies": {
+    "ts-loader": "^3.1.1",
+    "typescript": "^2.6.1",
+    "webpack": "^3.8.1"
+  }
+}
