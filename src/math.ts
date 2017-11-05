@@ -41,6 +41,10 @@ function allPoints(n: number): Point[] {
     return ordinaryPoints(n).concat(pointsAtInfinity(n))
 }
 
+function pointToString(point: Point): string {
+    return point + ''
+}
+
 function allLines(n: number): Point[][] {
     const infLines = lineAtInfinity(n)
     const vertLines = []
@@ -63,7 +67,7 @@ function generatePics(n: number): Image[]{
 function mapPointsToPics(points: Point[], pics: Image[]): {[s: string]: Image} {
     let mappings = {}
     points.forEach((point, i) => {
-        mappings[point+ ''] = pics[i]
+        mappings[pointToString(point)] = pics[i]
     })
     return mappings
 }
