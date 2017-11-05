@@ -1,9 +1,7 @@
-// declare type Image = number
-// declare type Card = Image[]
-// declare type Deck = Card[]
-// declare type CardIndex = number
-
 type Point = number | number[]
+type Image = number
+type Card = Image[]
+type Deck = Card[]
 
 function ordinaryPoints(n: number): number[] {
     const result = []
@@ -58,11 +56,11 @@ function allLines(n: number): Point[][] {
     return ordLines.concat(vertLines, [infLines])
 }
 
-function generatePics(n: number): number[]{
+function generatePics(n: number): Image[]{
     return Array.from(Array(n).keys())
 }
 
-function mapPointsToPics(points: Point[], pics: number[]): {[s: string]: number} {
+function mapPointsToPics(points: Point[], pics: Image[]): {[s: string]: Image} {
     let mappings = {}
     points.forEach((point, i) => {
         mappings[point+ ''] = pics[i]
@@ -70,7 +68,7 @@ function mapPointsToPics(points: Point[], pics: number[]): {[s: string]: number}
     return mappings
 }
 
-export function createDeck(n: number): number[][] {
+export function createDeck(n: number): Deck {
     const points = allPoints(n)
     const lines = allLines(n)
     const pics = generatePics(points.length)

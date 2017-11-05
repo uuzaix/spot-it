@@ -1,5 +1,5 @@
 import Vue from "vue";
-import {createDeck} from "./helpers";
+import {createDeck} from "./math";
 
 let v = new Vue({
   el: "#app",
