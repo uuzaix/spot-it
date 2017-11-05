@@ -1,3 +1,5 @@
+import { zipObj, range } from 'ramda'
+
 type Point = number | number[]
 type Image = number
 type Card = Image[]
@@ -18,19 +20,11 @@ function pointsAtInfinity(n: number): number[] {
 }
 
 function ordinaryLine(m: number, b: number, n: number): Point[] {
-    const result = []
-    for (let i = 0; i < n; i++) {
-        result.push([i, (m * i + b) % n])
-    }
-    return result.concat([m])
+    return range(0, n).map(i => [i, (m * i + b) % n]).concat([m])
 }
 
 function verticalLine(x: number, n: number): Point[] {
-    const result = []
-    for (let i = 0; i < n; i++) {
-        result.push([x, i])
-    }
-    return result.concat([1000])
+    return range(0, n).map(i => [x, i]).concat([1000])
 }
 
 function lineAtInfinity(n: number) {
@@ -47,10 +41,7 @@ function pointToString(point: Point): string {
 
 function allLines(n: number): Point[][] {
     const infLines = lineAtInfinity(n)
-    const vertLines = []
-    for (let i = 0; i < n; i++) {
-        vertLines.push(verticalLine(i, n))
-    }
+    const vertLines = range(0, n).map(i => verticalLine(i, n))
     const ordLines = []
     for (let i = 0; i < n; i++) {
         for (let j = 0; j < n; j++) {
@@ -61,15 +52,14 @@ function allLines(n: number): Point[][] {
 }
 
 function generatePics(n: number): Image[]{
-    return Array.from(Array(n).keys())
+    return range(0, n)
 }
 
 function mapPointsToPics(points: Point[], pics: Image[]): {[s: string]: Image} {
-    let mappings = {}
-    points.forEach((point, i) => {
-        mappings[pointToString(point)] = pics[i]
-    })
-    return mappings
+    const pointsAsString = points.map(point =>
+        pointToString(point)
+    )
+    return zipObj(pointsAsString, pics)
 }
 
 export function createDeck(n: number): Deck {
