@@ -27,7 +27,7 @@ function verticalLine(x: number, n: number): Point[] {
     return range(0, n).map(i => [x, i]).concat([1000])
 }
 
-function lineAtInfinity(n: number) {
+function lineAtInfinity(n: number): Point[] {
     return pointsAtInfinity(n)
 }
 
@@ -56,9 +56,7 @@ function generatePics(n: number): Image[]{
 }
 
 function mapPointsToPics(points: Point[], pics: Image[]): {[s: string]: Image} {
-    const pointsAsString = points.map(point =>
-        pointToString(point)
-    )
+    const pointsAsString = points.map(pointToString)
     return zipObj(pointsAsString, pics)
 }
 
