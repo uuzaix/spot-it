@@ -12,9 +12,10 @@ let v = new Vue({
           <div class="card"
                :class="{'card--selected': selected.includes(idx)}"
                v-on:click="itemClicked(idx)">
-            <span v-for="pic in card"
-                  :class="{'image--common': selected.includes(idx) && commonImage === pic}">
-              {{pic}}
+            <span v-for="pic in card">
+              <img :src="'http://joelgrus.com/experiments/pux-it/images/' + pic + '.svg'"
+                   :class="{'image--common': selected.includes(idx) && commonImage === pic}"
+                   class="image">
             </span>
            </div>
         </div>
