@@ -1,5 +1,5 @@
 import Vue from "vue";
-import {createDeck} from "./math";
+import {createDeck, shuffleCards} from "./math";
 
 let v = new Vue({
   el: "#app",
@@ -20,7 +20,7 @@ let v = new Vue({
         </div>
     </div>`,
   data: {
-    cards: createDeck(7),
+    cards: shuffleCards(createDeck(7)),
     selected: [],
   },
   computed: {

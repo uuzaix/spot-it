@@ -1,4 +1,5 @@
 import {zipObj, range, chain, map} from 'ramda'
+import {shuffle} from 'lodash'
 
 type Point = number | number[]
 type Image = number
@@ -11,7 +12,7 @@ function ordinaryPoints(n: number): number[] {
 }
 
 function pointsAtInfinity(n: number): number[] {
-  return Array.from(Array(n).keys()).concat([1000])
+  return range(0, n).concat([1000])
 }
 
 function ordinaryLine(m: number, b: number, n: number): Point[] {
@@ -55,9 +56,9 @@ export function createDeck(n: number): Deck {
   const lines = allLines(n)
   const pics = generatePics(points.length)
   const mappings = mapPointsToPics(points, pics)
-  return lines
-    .map(line => line
-      .map(point => mappings[point + '']
-      )
-    )
+  return map(line => map(point => mappings[point + ''], line), lines)
+}
+
+export function shuffleCards(deck : Deck): Deck {
+  return shuffle(deck.map(shuffle))
 }
