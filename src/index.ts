@@ -8,8 +8,9 @@ let v = new Vue({
       <div>
         Spot-it
       </div>
-        <div v-for="card, idx in cards">
-          <div class="card"
+        <div class="container">
+          <div v-for="card, idx in cards"
+               class="card"
                :class="{'card--selected': selected.includes(idx)}"
                v-on:click="itemClicked(idx)">
             <span v-for="pic in card">
