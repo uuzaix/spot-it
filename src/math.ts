@@ -56,7 +56,7 @@ export function createDeck(n: number): Deck {
   const lines = allLines(n)
   const pics = generatePics(points.length)
   const mappings = mapPointsToPics(points, pics)
-  return map(line => map(point => mappings[point + ''], line), lines)
+  return map(line => map(point => mappings[pointToString(point)], line), lines)
 }
 
 export function shuffleCards(deck : Deck): Deck {
