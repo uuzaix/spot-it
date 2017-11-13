@@ -1,15 +1,39 @@
 import Vue from "vue";
+import Vuex from "vuex";
 import {createDeck, shuffleCards} from "./math";
+Vue.use(Vuex)
+
+
+const store = new Vuex.Store({
+  state: {
+    cards: shuffleCards(createDeck(7)),
+    selected: [],
+  },
+  mutations: {
+    updateSelected: (state, id) => {
+      if (state.selected.includes(id)) {
+        state.selected = state.selected.filter(card => card !== id)
+      } else {
+        if (state.selected.length < 2) {
+          state.selected = [...state.selected, id]
+        } else {
+          state.selected = [id]
+        }
+      }
+    }
+  }
+})
 
 let v = new Vue({
   el: "#app",
+  store,
   template: `
     <div>
       <div>
         Spot-it
       </div>
         <div class="container">
-          <div v-for="card, idx in cards"
+          <div v-for="card, idx in deck"
                class="card"
                :class="{'card--selected': selected.includes(idx)}"
                v-on:click="itemClicked(idx)">
@@ -21,30 +45,24 @@ let v = new Vue({
            </div>
         </div>
     </div>`,
-  data: {
-    cards: shuffleCards(createDeck(7)),
-    selected: [],
-  },
   computed: {
     commonImage() {
       if (this.selected.length === 2) {
         const [firstId, secondId] = this.selected
-        return this.cards[firstId]
-          .filter(pic => this.cards[secondId].includes(pic))[0]
+        return this.deck[firstId]
+          .filter(pic => this.deck[secondId].includes(pic))[0]
       }
+    },
+    deck() {
+      return store.state.cards
+    },
+    selected() {
+      return store.state.selected
     }
   },
   methods: {
     itemClicked(id) {
-      if (this.selected.includes(id)) {
-        this.selected = this.selected.filter(card => card !== id)
-      } else {
-        if (this.selected.length < 2) {
-          this.selected = [...this.selected, id]
-        } else {
-          this.selected = [id]
-        }
-      }
+      store.commit('updateSelected', id)
     }
   },
 });
