@@ -1,18 +1,24 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import {createDeck, shuffleCards} from "./math";
+import {Card, createDeck, Deck, Image, shuffleCards} from "./math";
 Vue.use(Vuex)
 
+type State = {
+  cards: Deck,
+  selected: Card,
+}
+
+const state: State = {
+  cards: shuffleCards(createDeck(7)),
+  selected: [],
+}
 
 const store = new Vuex.Store({
-  state: {
-    cards: shuffleCards(createDeck(7)),
-    selected: [],
-  },
+  state,
   mutations: {
-    updateSelected: (state, id) => {
+    updateSelected: (state: State, id: number): void => {
       if (state.selected.includes(id)) {
-        state.selected = state.selected.filter(card => card !== id)
+        state.selected = state.selected.filter((card: Image): boolean => card !== id)
       } else {
         if (state.selected.length < 2) {
           state.selected = [...state.selected, id]
@@ -46,22 +52,22 @@ let v = new Vue({
         </div>
     </div>`,
   computed: {
-    commonImage() {
+    commonImage(): Image {
       if (this.selected.length === 2) {
         const [firstId, secondId] = this.selected
         return this.deck[firstId]
           .filter(pic => this.deck[secondId].includes(pic))[0]
       }
     },
-    deck() {
+    deck(): Deck {
       return store.state.cards
     },
-    selected() {
+    selected(): Card {
       return store.state.selected
     }
   },
   methods: {
-    itemClicked(id) {
+    itemClicked(id: number): void {
       store.commit('updateSelected', id)
     }
   },

@@ -2,9 +2,9 @@ import {zipObj, range, chain, map} from 'ramda'
 import {shuffle} from 'lodash'
 
 type Point = number | number[]
-type Image = number
-type Card = Image[]
-type Deck = Card[]
+export type Image = number
+export type Card = Image[]
+export type Deck = Card[]
 
 function ordinaryPoints(n: number): number[] {
   const createPair = i => map(j => [i, j], range(0, n))
