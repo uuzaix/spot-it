@@ -9,10 +9,6 @@ export class Image {
   id: number
 }
 
-// export class Card {
-//   images: Image[]
-// }
-
 export type Card = Image[]
 
 export type Deck = Card[]
