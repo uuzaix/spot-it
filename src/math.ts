@@ -1,17 +1,28 @@
 import {zipObj, range, chain, map} from 'ramda'
 import {shuffle} from 'lodash'
 
-type Point = number | number[]
-export type Image = number
+class Point {
+  id: number | number[]
+}
+
+export class Image {
+  id: number
+}
+
+// export class Card {
+//   images: Image[]
+// }
+
 export type Card = Image[]
+
 export type Deck = Card[]
 
-function ordinaryPoints(n: number): number[] {
+function ordinaryPoints(n: number): Point[] {
   const createPair = i => map(j => [i, j], range(0, n))
   return chain(createPair, range(0, n))
 }
 
-function pointsAtInfinity(n: number): number[] {
+function pointsAtInfinity(n: number): Point[] {
   return range(0, n).concat([1000])
 }
 

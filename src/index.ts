@@ -16,7 +16,7 @@ const state: State = {
 const store = new Vuex.Store({
   state,
   mutations: {
-    updateSelected: (state: State, id: number): void => {
+    updateSelected: (state: State, id: Image): void => {
       if (state.selected.includes(id)) {
         state.selected = state.selected.filter((card: Image): boolean => card !== id)
       } else {
