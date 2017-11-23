@@ -1,5 +1,6 @@
 import {zipObj, range, chain, map} from 'ramda'
 import {shuffle} from 'lodash'
+import {intersection} from 'ramda'
 
 class Point {
   id: number | number[]
@@ -14,20 +15,20 @@ export type Card = Image[]
 export type Deck = Card[]
 
 function ordinaryPoints(n: number): Point[] {
-  const createPair = i => map(j => [i, j], range(0, n))
+  const createPair = (i: number) => map((j: number) => ({id: [i, j]}), range(0, n))
   return chain(createPair, range(0, n))
 }
 
 function pointsAtInfinity(n: number): Point[] {
-  return range(0, n).concat([1000])
+  return map((i: number) => ({id: i}), range(0, n)).concat([{id: 1000}])
 }
 
 function ordinaryLine(m: number, b: number, n: number): Point[] {
-  return map(i => [i, (m * i + b) % n], range(0, n)).concat([m])
+  return map((i: number) => ({id: [i, (m * i + b) % n]}), range(0, n)).concat([{id: [m]}])
 }
 
 function verticalLine(x: number, n: number): Point[] {
-  return map(i => [x, i], range(0, n)).concat([1000])
+  return map((i: number) => ({id: [x, i]}), range(0, n)).concat([{id: [1000]}])
 }
 
 function lineAtInfinity(n: number): Point[] {
@@ -39,18 +40,18 @@ function allPoints(n: number): Point[] {
 }
 
 function pointToString(point: Point): string {
-  return point + ''
+  return point.id + ''
 }
 
 function allLines(n: number): Point[][] {
   const infLines = lineAtInfinity(n)
-  const vertLines = map(i => verticalLine(i, n), range(0, n))
-  const ordLines = chain(i => map(j => ordinaryLine(i, j, n), range(0, n)), range(0, n))
+  const vertLines = map((i: number) => verticalLine(i, n), range(0, n))
+  const ordLines = chain((i: number) => map((j: number) => ordinaryLine(i, j, n), range(0, n)), range(0, n))
   return ordLines.concat(vertLines, [infLines])
 }
 
 function generatePics(n: number): Image[] {
-  return range(0, n)
+  return map((i: number) => ({id: i}), range(0, n))
 }
 
 function mapPointsToPics(points: Point[], pics: Image[]): { [s: string]: Image } {
@@ -63,9 +64,10 @@ export function createDeck(n: number): Deck {
   const lines = allLines(n)
   const pics = generatePics(points.length)
   const mappings = mapPointsToPics(points, pics)
-  return map(line => map(point => mappings[pointToString(point)], line), lines)
+  return map((line: Point[]) => map((point: Point) => mappings[pointToString(point)], line), lines)
 }
 
 export function shuffleCards(deck : Deck): Deck {
+  console.log(deck)
   return shuffle(deck.map(shuffle))
 }
