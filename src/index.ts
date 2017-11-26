@@ -42,11 +42,11 @@ let v = new Vue({
         <div class="container">
           <div v-for="card, idx in deck"
                class="card"
-               :class="{'card--selected': selected[0] === idx || selected[1] === idx}"
+               :class="{'card--selected': ifContains(idx, selected)}"
                v-on:click="itemClicked(idx)">
             <span v-for="pic in card">
               <img :src="'http://joelgrus.com/experiments/pux-it/images/' + pic.id + '.svg'"
-                   :class="{'image--common': (selected[0] === idx || selected[1] === idx) && commonImage === pic.id}"
+                   :class="{'image--common': ifContains(idx, selected) && commonImage === pic.id}"
                    class="image">
             </span>
            </div>
@@ -70,6 +70,9 @@ let v = new Vue({
   methods: {
     itemClicked(id: number): void {
       store.commit('updateSelected', id)
+    },
+    ifContains(el: number, array: number[]) {
+      return contains(el, array)
     }
   },
 });

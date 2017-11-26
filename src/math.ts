@@ -1,6 +1,5 @@
 import {zipObj, range, chain, map} from 'ramda'
 import {shuffle} from 'lodash'
-import {intersection} from 'ramda'
 
 class Point {
   id: number | number[]
@@ -68,6 +67,5 @@ export function createDeck(n: number): Deck {
 }
 
 export function shuffleCards(deck : Deck): Deck {
-  console.log(deck)
   return shuffle(deck.map(shuffle))
 }
